@@ -34,7 +34,7 @@ public class MySqlConecction {
 
             // Insertar un registro en la tabla
             String sql = "INSERT INTO usuarios (nombre, apellido, email, direccion, sexo, nacionalidad, fecha_nacimiento) " +
-                    "VALUES ('Agustinadsdasdsa', 'Cuculich', 'agustina@example.com', 'alberdi', 'Femenina', 'Argentina', '2002-01-24')";
+                    "VALUES ('sdasdsa', 'dada', 'agustina@example.com', 'alberdi', 'Femenina', 'Argentina', '2002-01-24')";
             //String sql = "DELETE FROM usuarios WHERE id=4";
             //String sql = "UPDATE usuarios SET nombre = 'Simon el trolon' WHERE id=2 ";
             stmt.executeUpdate(sql);
