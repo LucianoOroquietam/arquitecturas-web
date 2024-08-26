@@ -1,7 +1,7 @@
 package org.example;
 import java.sql.*;
 
-public class BaseDeDatos {
+public class DerbyDB {
     private static final String url = "jdbc:derby:memory:myDB;create=true";
     public static void main(String[] args) {
 

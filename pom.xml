@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>modulo-jdbc</module>
+        <module>MySQLConection</module>
     </modules>
 
     <!-- Definición de dependencias -->
@@ -28,7 +29,11 @@
         </dependency>
 
         <!-- Otras dependencias pueden ir aquí -->
+
+
     </dependencies>
+
+
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
