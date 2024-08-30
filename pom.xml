@@ -11,6 +11,7 @@
     <modules>
         <module>modulo-jdbc</module>
         <module>MySQLConection</module>
+        <module>Patron-DAO</module>
     </modules>
 
     <!-- Definición de dependencias -->

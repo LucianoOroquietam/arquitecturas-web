@@ -16,7 +16,7 @@ public class MySqlConnection {
             System.out.println("Conexión establecida con éxito!");
 
 
-            addUser(conn, "Tomasito", "Tourn", "tomytourn@gmail.com", "Alsina 1250", "Masculino", "Argentino", Date.valueOf("2005-02-01"));
+            addUser(conn, "Micaela", "Diaz", "micadiaz02@gmail.com", "Pellegrini 1050", "Femenino", "Argentino", Date.valueOf("2002-02-01"));
 
         } catch (SQLException e) {
             System.err.println("Error al conectarse a la base de datos:");
