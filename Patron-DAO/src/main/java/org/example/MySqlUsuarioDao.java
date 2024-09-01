@@ -9,13 +9,13 @@ import java.util.List;
 
 public class MySqlUsuarioDao implements UsuarioIntefaceDAO{
 
-    private Connection conexion;
+    private final Connection conexion;
 
     public MySqlUsuarioDao(Connection conect){
         try {
-            this.conexion = ConexionDB.getInstance();  // conexión desde el Singleton
+            this.conexion = ConexionDbSingleton.getInstance();  // conexión desde el Singleton
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Error al obtener la conexión", e);
         }
     }
 
@@ -31,6 +31,7 @@ public class MySqlUsuarioDao implements UsuarioIntefaceDAO{
             statement.setString(6,user.getNacionalidad());
             statement.setDate(7,user.getFecha_nacimiento());
             statement.executeUpdate();
+            System.out.println("El usuario " + user + " fue creado con exito");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -40,21 +41,14 @@ public class MySqlUsuarioDao implements UsuarioIntefaceDAO{
     public List<Usuario> obtenerPersonas() throws SQLException {
         List<Usuario> listaPersonas = new ArrayList<>();
         String sql = "SELECT * FROM usuarios";
-        try(PreparedStatement statement = conexion.prepareStatement(sql); ResultSet rs = statement.executeQuery()){
+
+        try(PreparedStatement statement = conexion.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery()){
+
             while (rs.next()){
-                Usuario usuario = new Usuario(
-                        rs.getInt("id"),
-                        rs.getString("nombre"),
-                        rs.getString("apellido"),
-                        rs.getString("email"),
-                        rs.getString("direccion"),
-                        rs.getString("sexo"),
-                        rs.getString("nacionalidad"),
-                        rs.getDate("fecha_nacimiento")
-                );
-
+                Usuario usuario = mapResultSetToUsuario(rs);
+                listaPersonas.add(usuario);
             }
-
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -62,26 +56,20 @@ public class MySqlUsuarioDao implements UsuarioIntefaceDAO{
     }
 
     @Override
-    public Usuario obtenerUsuario(Usuario user){
+    public Usuario obtenerUsuario(int id) {
         String sql = "SELECT * FROM usuarios WHERE id = ?";
-        try(PreparedStatement statement = conexion.prepareStatement(sql)){
-            ResultSet rs = statement.executeQuery() ;
-            if (rs.next()){
-                return new Usuario(
-                        rs.getInt("id"),
-                        rs.getString("nombre"),
-                        rs.getString("apellido"),
-                        rs.getString("email"),
-                        rs.getString("direccion"),
-                        rs.getString("sexo"),
-                        rs.getString("nacionalidad"),
-                        rs.getDate("fecha_nacimiento")
-                );
+        try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+            statement.setInt(1, id);
+            //sino lo encierro en un try tendria que cerrarlo manualmente .close()
+            try(ResultSet rs = statement.executeQuery()){
+                if (rs.next()) {
+                    return mapResultSetToUsuario(rs);
+                }
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
 
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al obtener el usuario", e);
+        }
         return null;
     }
 
@@ -109,8 +97,41 @@ public class MySqlUsuarioDao implements UsuarioIntefaceDAO{
         try (PreparedStatement statement = this.conexion.prepareStatement(deleteSql)){
             statement.setInt(1,id);
             statement.executeUpdate();
+            System.out.println("Usuario eliminado con exito");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
+    // Método auxiliar para mapear el ResultSet a un objeto Usuario
+    private Usuario mapResultSetToUsuario(ResultSet rs) throws SQLException {
+        return new Usuario(
+                rs.getInt("id"),
+                rs.getString("nombre"),
+                rs.getString("apellido"),
+                rs.getString("email"),
+                rs.getString("direccion"),
+                rs.getString("sexo"),
+                rs.getString("nacionalidad"),
+                rs.getDate("fecha_nacimiento")
+        );
+    }
+
+    /*este metodo me ahorra que en cada metodo haga esto*/
+     /*  Usuario usuario = new Usuario(
+                        rs.getInt("id"),
+                        rs.getString("nombre"),
+                        rs.getString("apellido"),
+                        rs.getString("email"),
+                        rs.getString("direccion"),
+                        rs.getString("sexo"),
+                        rs.getString("nacionalidad"),
+                        rs.getDate("fecha_nacimiento")
+                );
+
+        convierte un ResultSet en un objeto Usuario.
+        Evitando la repetición de código en los métodos obtenerPersonas y obtenerUsuario.
+      */
+
+
 }

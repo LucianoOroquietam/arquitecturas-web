@@ -11,7 +11,7 @@ public interface UsuarioIntefaceDAO {
     //obtener todos los usuarios
     List<Usuario> obtenerPersonas() throws SQLException;
     //obtener un usuario en especifico (por id)
-    Usuario obtenerUsuario(Usuario user);
+    Usuario obtenerUsuario(int id);
     //modificar usuario
     void modificarUsuario(Usuario user) throws SQLException;
     //eliminar usuario
