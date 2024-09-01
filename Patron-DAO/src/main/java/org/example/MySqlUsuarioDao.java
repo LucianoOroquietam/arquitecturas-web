@@ -12,7 +12,11 @@ public class MySqlUsuarioDao implements UsuarioIntefaceDAO{
     private Connection conexion;
 
     public MySqlUsuarioDao(Connection conect){
-        this.conexion = conect;
+        try {
+            this.conexion = ConexionDB.getInstance();  // conexión desde el Singleton
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -48,12 +52,7 @@ public class MySqlUsuarioDao implements UsuarioIntefaceDAO{
                         rs.getString("nacionalidad"),
                         rs.getDate("fecha_nacimiento")
                 );
-                if (!listaPersonas.contains(usuario)) {
-                    listaPersonas.add(usuario);
-                }
-                else {
-                    return null;
-                }
+
             }
 
         }catch (SQLException e){

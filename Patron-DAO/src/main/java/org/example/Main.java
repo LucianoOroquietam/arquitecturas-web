@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
         try{
             //conexion a la db levantada en docker
-            Connection conexionDB = ConexionDB.getConnection();
+            Connection conexionDB = ConexionDB.getInstance();
 
             //instancia DAO
             MySqlUsuarioDao usuarioDao = new MySqlUsuarioDao(conexionDB);
