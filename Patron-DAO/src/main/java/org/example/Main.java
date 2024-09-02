@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.Derby.ConexionDerbySingleton;
+
 import java.sql.Connection;
 import java.util.List;
 
@@ -7,10 +9,10 @@ public class Main {
     public static void main(String[] args) {
         try{
             //conexion a la db levantada en docker
-            Connection conexionDB = ConexionDbSingleton.getInstance();
+            Connection conexion = ConexionDerbySingleton.getInstance();
 
             //instancia DAO
-            MySqlUsuarioDao usuarioDao = new MySqlUsuarioDao(conexionDB);
+            MySqlUsuarioDao usuarioDao = new MySqlUsuarioDao(conexion);
 
 
            Usuario nuevoUsuario = new Usuario(1, "Santiago", "Coria", "Santicoria@gmail.com", "algun lugar 123", "Masculino", "Argentina", java.sql.Date.valueOf("1997-01-01"));

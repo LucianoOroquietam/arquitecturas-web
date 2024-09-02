@@ -7,7 +7,7 @@ public interface UsuarioIntefaceDAO {
     //implementamos la interfaz para operaciones CRUD
 
     //crear usuario
-    void crearUsuario(Usuario user);
+    void crearUsuario(Usuario user) throws SQLException;
     //obtener todos los usuarios
     List<Usuario> obtenerPersonas() throws SQLException;
     //obtener un usuario en especifico (por id)
