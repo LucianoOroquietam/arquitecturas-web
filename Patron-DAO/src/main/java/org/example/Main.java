@@ -10,6 +10,7 @@ public class Main {
         try{
             //conexion a la db levantada en docker
             Connection conexion = ConexionDerbySingleton.getInstance();
+            
 
             //instancia DAO
             MySqlUsuarioDao usuarioDao = new MySqlUsuarioDao(conexion);

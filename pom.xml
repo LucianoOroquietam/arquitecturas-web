@@ -12,6 +12,7 @@
         <module>modulo-jdbc</module>
         <module>MySQLConection</module>
         <module>Patron-DAO</module>
+        <module>Jpa-Hibernate</module>
     </modules>
 
     <!-- Definición de dependencias -->
@@ -29,7 +30,19 @@
             <version>10.17.1.0</version>
         </dependency>
 
-        <!-- Otras dependencias pueden ir aquí -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>5.6.15.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>javax.persistence-api</artifactId>
+            <version>2.2</version>
+        </dependency>
+
+
 
 
     </dependencies>
